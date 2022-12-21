@@ -1,7 +1,7 @@
 use actix_web::{web, HttpResponse};
-use sqlx::PgPool;
 use chrono::Utc;
 use uuid::Uuid;
+use sqlx::PgPool;
 
 
 #[derive(serde::Deserialize)]
@@ -20,13 +20,13 @@ pub async fn subscribe(form: web::Form<FormData>, pool: web::Data<PgPool>) -> Ht
         form.email,
         form.name,
         Utc::now()
-    ).execute(pool.get_ref()).await{
+    )
+    .execute(pool.get_ref()).await{
         Ok(_) => HttpResponse::Ok().finish(),
         Err(e) => {
             println!("Failed to execute query: {}", e);
             HttpResponse::InternalServerError().finish()
         }
-    };
+    }; 
     HttpResponse::Ok().finish() 
 }
-

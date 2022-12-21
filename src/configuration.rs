@@ -33,7 +33,10 @@ impl DatabaseSettings {
 pub fn get_configuration() -> Result<Settings, config::ConfigError> {
     // initialize the Config reader
     let mut settings = config::Config::default();
-    // add Config from the `configuration` file
+    
+    // Add configuration values from a file named `configuration`.
+    // It will look for any top-level file with an extension
+    // that `config` knows how to parse: yaml, json, etc.
     settings.merge(config::File::with_name("configuration"))?;
     // try to convert the config values into our Settings type
     settings.try_into()
